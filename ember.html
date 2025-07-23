@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Project Ember Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 40px;
+            color: #333;
+        }
+        table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 90%;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px 15px;
+            text-align: center;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+        td {
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 Project Ember Metrics</h1>
+    <div id="table-container"></div>
+
+    <script>
+        function showInfo(data, tabletop) {
+            const container = document.getElementById("table-container");
+            if (!data || data.length === 0) {
+                container.innerHTML = "<p>No data found.</p>";
+                return;
+            }
+
+            const table = document.createElement("table");
+            const header = table.insertRow();
+
+            const columns = Object.keys(data[0]);
+            columns.forEach(col => {
+                const th = document.createElement("th");
+                th.textContent = col;
+                header.appendChild(th);
+            });
+
+            data.forEach(row => {
+                const tr = table.insertRow();
+                columns.forEach(col => {
+                    const td = tr.insertCell();
+                    td.textContent = row[col];
+                });
+            });
+
+            container.appendChild(table);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            Tabletop.init({
+                key: 'https://docs.google.com/spreadsheets/d/1m3e72SQSjw3BQNyPVznfisyS2n_Gt2O9eJnbn0Vj7uc/pubhtml',
+                callback: showInfo,
+                simpleSheet: false,
+                wanted: ['MetricsEmber']
+            });
+        });
+    </script>
+</body>
+</html>
