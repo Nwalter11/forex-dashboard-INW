@@ -1,84 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Project Ember Dashboard</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Ember Metrics</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f3f3f3;
+            background-color: #f2f2f2;
             text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            margin-top: 50px;
         }
         h1 {
+            font-size: 2.5rem;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #e7e7e7;
+            border: 2px solid #555;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+            display: inline-block;
+        }
+        iframe {
             margin-top: 40px;
-            color: #333;
-        }
-        table {
-            margin: 30px auto;
-            border-collapse: collapse;
             width: 90%;
-            background-color: white;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px 15px;
-            text-align: center;
-        }
-        th {
-            background-color: #333;
-            color: white;
-        }
-        td {
-            color: #222;
+            height: 600px;
+            border: none;
         }
     </style>
 </head>
 <body>
-    <a href="index.html">
-  <button style="margin-bottom: 20px; padding: 10px 20px; font-size: 16px;">🔁 Switch to Inverse No Wick</button>
-</a>
-
-    <h1>🔥 Project Ember Metrics</h1>
-    <div id="table-container"></div>
-
-    <script>
-        function showInfo(data, tabletop) {
-            const container = document.getElementById("table-container");
-            if (!data || data.length === 0) {
-                container.innerHTML = "<p>No data found.</p>";
-                return;
-            }
-
-            const table = document.createElement("table");
-            const header = table.insertRow();
-
-            const columns = Object.keys(data[0]);
-            columns.forEach(col => {
-                const th = document.createElement("th");
-                th.textContent = col;
-                header.appendChild(th);
-            });
-
-            data.forEach(row => {
-                const tr = table.insertRow();
-                columns.forEach(col => {
-                    const td = tr.insertCell();
-                    td.textContent = row[col];
-                });
-            });
-
-            container.appendChild(table);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            Tabletop.init({
-                key: 'https://docs.google.com/spreadsheets/d/1m3e72SQSjw3BQNyPVznfisyS2n_Gt2O9eJnbn0Vj7uc/pubhtml',
-                callback: showInfo,
-                simpleSheet: false,
-                wanted: ['MetricsEmber']
-            });
-        });
-    </script>
+    <div class="header">
+        <h1>🔥 Project Ember Metrics</h1>
+        <a href="index.html" class="button">Switch to Inverse No Wick</a>
+        <h2 style="margin-top: 40px;">Live Trade Logs</h2>
+    </div>
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSnAZkmr36DrsRwzLMVO6AE0XR7wJflOWvbjvXWDTUJ78n-vr_6ZVKTP3ZqUYa5gRfhNVyYItKBg1Yx/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
 </body>
 </html>
+
