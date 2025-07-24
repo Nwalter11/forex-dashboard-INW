@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>Project Ember Metrics</title>
+  <title>🔥 Project Ember Metrics</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -34,7 +34,7 @@
 <body>
   <h1>🔥 Project Ember Metrics</h1>
   <a href="index.html">
-    <button style="margin-bottom: 20px; padding: 10px 20px; font-size: 16px;">↩️ Switch to Inverse No Wick</button>
+    <button style="margin-bottom: 20px; padding: 10px 20px; font-size: 16px;">🔁 Switch to Inverse No Wick</button>
   </a>
 
   <h3>Live Trade Logs</h3>
@@ -56,22 +56,24 @@
   </table>
 
   <script>
-    const API_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDjNXcD2MzcvurU8ph7KkTMnBu5J975aevTwlWit-xH9tXGSVbE9NAEiYz5SJ1G_XMUZphfxDPN-hE/gviz/tq?tqx=out:json";
+    const SHEET_ID = "2PACX-1vTDjNXcD2MzcvurU8ph7KkTMnBu5J975aevTwlWit-xH9tXGSVbE9NAEiYz5SJ1G_XMUZphfxDPN-hE";
+    const SHEET_GID = "0";
+    const API_URL = `https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?output=tsv`;
 
     function fetchSheetData() {
-      fetch(API_URL)
+      fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDjNXcD2MzcvurU8ph7KkTMnBu5J975aevTwlWit-xH9tXGSVbE9NAEiYz5SJ1G_XMUZphfxDPN-hE/pub?output=tsv")
         .then(res => res.text())
         .then(text => {
-          const json = JSON.parse(text.substring(47).slice(0, -2));
-          const rows = json.table.rows;
+          const lines = text.trim().split("\n").slice(1); // Skip header row
           const tableBody = document.querySelector("#log-table tbody");
           tableBody.innerHTML = "";
 
-          rows.forEach(row => {
+          lines.forEach(line => {
+            const columns = line.split("\t").slice(0, 9); // Limit to 9 columns
             const tr = document.createElement("tr");
-            row.c.forEach(cell => {
+            columns.forEach(cell => {
               const td = document.createElement("td");
-              td.textContent = cell ? cell.v : "";
+              td.textContent = cell;
               tr.appendChild(td);
             });
             tableBody.appendChild(tr);
