@@ -1,50 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Ember Metrics</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            margin-top: 50px;
-        }
-        h1 {
-            font-size: 2.5rem;
-        }
-        .button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #e7e7e7;
-            border: 2px solid #555;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            color: black;
-            display: inline-block;
-        }
-        iframe {
-            margin-top: 40px;
-            width: 90%;
-            height: 600px;
-            border: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Project Ember Metrics</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 90%;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    th {
+      background: #333;
+      color: white;
+    }
+    td {
+      background: #fff;
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🔥 Project Ember Metrics</h1>
-        <a href="index.html" class="button">Switch to Inverse No Wick</a>
-        <h2 style="margin-top: 40px;">Live Trade Logs</h2>
-    </div>
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSnAZkmr36DrsRwzLMVO6AE0XR7wJflOWvbjvXWDTUJ78n-vr_6ZVKTP3ZqUYa5gRfhNVyYItKBg1Yx/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+  <h1>🔥 Project Ember Metrics</h1>
+  <a href="index.html">
+    <button style="margin-bottom: 20px; padding: 10px 20px; font-size: 16px;">🔁 Switch to Inverse No Wick</button>
+  </a>
+
+  <h3>Live Trade Logs</h3>
+  <table id="log-table">
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Pair</th>
+        <th>Direction</th>
+        <th>Entry</th>
+        <th>SL</th>
+        <th>TP</th>
+        <th>Status</th>
+        <th>PnL ($)</th>
+        <th>Balance ($)</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const SHEET_ID = "1m3e72SQSjw3BQNyPVznfisyS2n_Gt2O9eJnbn0Vj7uc";
+    const SHEET_GID = "0";  // MetricsEmber tab is usually GID 0 unless changed
+    const API_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET_GID}`;
+
+    function fetchSheetData() {
+      fetch(API_URL)
+        .then(res => res.text())
+        .then(text => {
+          const json = JSON.parse(text.substring(47).slice(0, -2));
+          const rows = json.table.rows;
+          const tableBody = document.querySelector("#log-table tbody");
+          tableBody.innerHTML = "";
+
+          rows.forEach(row => {
+            const tr = document.createElement("tr");
+            row.c.forEach(cell => {
+              const td = document.createElement("td");
+              td.textContent = cell ? cell.v : "";
+              tr.appendChild(td);
+            });
+            tableBody.appendChild(tr);
+          });
+        });
+    }
+
+    fetchSheetData();
+    setInterval(fetchSheetData, 5 * 60 * 1000); // Refresh every 5 mins
+  </script>
 </body>
 </html>
+
 
