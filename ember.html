@@ -34,7 +34,7 @@
 <body>
   <h1>🔥 Project Ember Metrics</h1>
   <a href="index.html">
-    <button style="margin-bottom: 20px; padding: 10px 20px; font-size: 16px;">🔁 Switch to Inverse No Wick</button>
+    <button style="margin-bottom: 20px; padding: 10px 20px; font-size: 16px;">↩️ Switch to Inverse No Wick</button>
   </a>
 
   <h3>Live Trade Logs</h3>
@@ -56,9 +56,7 @@
   </table>
 
   <script>
-    const SHEET_ID = "1m3e72SQSjw3BQNyPVznfisyS2n_Gt2O9eJnbn0Vj7uc";
-    const SHEET_GID = "0";  // MetricsEmber tab is usually GID 0 unless changed
-    const API_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET_GID}`;
+    const API_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDjNXcD2MzcvurU8ph7KkTMnBu5J975aevTwlWit-xH9tXGSVbE9NAEiYz5SJ1G_XMUZphfxDPN-hE/gviz/tq?tqx=out:json";
 
     function fetchSheetData() {
       fetch(API_URL)
@@ -86,5 +84,3 @@
   </script>
 </body>
 </html>
-
-
